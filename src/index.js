@@ -7,7 +7,6 @@ import imagesEl from './fetchImages';
 
 const form = document.querySelector('.search-form');
 const inputEl = document.querySelector('input');
-const searchBtn = document.querySelector('button');
 const imagesList = document.querySelector('.gallery');
 
 form.addEventListener('submit', onSubmit);
@@ -15,10 +14,10 @@ form.addEventListener('submit', onSubmit);
 function onSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
-    const inputValue = form.elements.searchQuery.value;
-    console.log(inputValue);
+    const inputValue = form.elements.searchQuery.value.trim();
 
-    if(inputValue===""){
+    if (inputValue === ""){
+        imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     }
 
