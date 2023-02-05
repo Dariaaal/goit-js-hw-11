@@ -14,9 +14,16 @@ form.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
     e.preventDefault();
-    const inputValue = e.target.value;
+    const form = e.currentTarget;
+    const inputValue = form.elements.searchQuery.value;
+    console.log(inputValue);
+
+    if(inputValue===""){
+        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    }
 
     imagesEl.fetchImages(inputValue).then(items=>{
+
         console.log(items);
         createImageCard(items);
     })
