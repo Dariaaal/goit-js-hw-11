@@ -16,9 +16,30 @@ function onSubmit(e) {
     e.preventDefault();
     const inputValue = e.target.value;
 
-    imagesEl.fetchImages(inputValue).then(image=>{})
+    imagesEl.fetchImages(inputValue).then(items=>{
+        console.log(items);
+        createImageCard(items);
+    })
 }
 
-function createImageCard() {
-    
+function createImageCard(hits) {
+   const markup = hits.map(hit => `<div class="photo-card">
+   <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="400px"/>
+   <div class="info">
+     <p class="info-item">
+       <b>Likes ${hit.likes}</b>
+     </p>
+     <p class="info-item">
+       <b>Views ${hit.views}</b>
+     </p>
+     <p class="info-item">
+       <b>Comments ${hit.comments}</b>
+     </p>
+     <p class="info-item">
+       <b>Downloads ${hit.downloads}</b>
+     </p>
+   </div>
+ </div>`).join('');
+
+imagesList.innerHTML = markup;
 }
