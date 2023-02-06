@@ -19,10 +19,14 @@ function onSubmit(e) {
     if (inputValue === ""){
         imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        return;
     }
 
     imagesEl.fetchImages(inputValue).then(items=>{
-
+      if (items.length === 0){
+        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        return;
+      }
         console.log(items);
         createImageCard(items);
     })
