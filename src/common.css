@@ -24,6 +24,7 @@ img {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.212);
     position: sticky;
     top: 0;
+    margin-bottom: 20px;
 }
 
 .search-form{
@@ -57,8 +58,20 @@ button{
     cursor: pointer;
 }
 
-.info{
+.gallery{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.info{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 14px;
 }
