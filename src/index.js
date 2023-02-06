@@ -30,19 +30,19 @@ function onSubmit(e) {
 
 function createImageCard(hits) {
    const markup = hits.map(hit => `<div class="photo-card">
-   <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="400px"/>
+   <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="300px" height="144px" style="object-fit:cover;"/>
    <div class="info">
      <p class="info-item">
-       <b>Likes ${hit.likes}</b>
+       <b>Likes <br>${hit.likes}</b>
      </p>
      <p class="info-item">
-       <b>Views ${hit.views}</b>
+       <b>Views <br>${hit.views}</b>
      </p>
      <p class="info-item">
-       <b>Comments ${hit.comments}</b>
+       <b>Comments <br>${hit.comments}</b>
      </p>
      <p class="info-item">
-       <b>Downloads ${hit.downloads}</b>
+       <b>Downloads <br>${hit.downloads}</b>
      </p>
    </div>
  </div>`).join('');
