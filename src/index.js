@@ -1,7 +1,6 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import axios from 'axios';
 import infiniteScroll from 'infinite-scroll';
 import imagesEl from './fetchImages';
 
@@ -30,11 +29,11 @@ function onSubmit(e) {
         console.log(items);
         createImageCard(items);
     })
-}
+  }
 
 function createImageCard(hits) {
    const markup = hits.map(hit => `<div class="photo-card">
-   <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="300px" height="144px" style="object-fit:cover;"/>
+   <a href="${hit.largeImageURL}"><img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="400px" height="244px" style="object-fit:cover;"/></a>
    <div class="info">
      <p class="info-item">
        <b>Likes <br>${hit.likes}</b>
@@ -52,4 +51,10 @@ function createImageCard(hits) {
  </div>`).join('');
 
 imagesList.innerHTML = markup;
+gallery.refresh();
 }
+
+const gallery = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionDelay: 250,
+});
