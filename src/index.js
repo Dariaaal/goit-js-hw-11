@@ -5,31 +5,42 @@ import infiniteScroll from 'infinite-scroll';
 import imagesEl from './fetchImages';
 
 const form = document.querySelector('.search-form');
-const inputEl = document.querySelector('input');
 const imagesList = document.querySelector('.gallery');
+const loadBtn = document.querySelector('.load-more');
 
 form.addEventListener('submit', onSubmit);
+loadBtn.addEventListener('click', onLoadBtnClick);
 
 function onSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
-    const inputValue = form.elements.searchQuery.value.trim();
+    imagesEl.inputValue = form.elements.searchQuery.value.trim();
 
-    if (inputValue === ""){
+    if (imagesEl.inputValue === ""){
         imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         return;
     }
 
-    imagesEl.fetchImages(inputValue).then(items=>{
+    imagesEl.fetchImages(imagesEl.inputValue).then(items=>{
       if (items.length === 0){
+        imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         return;
       }
         console.log(items);
         createImageCard(items);
+        loadBtn.classList.remove('hidden');
     })
-  }
+  };
+
+function onLoadBtnClick(){
+  imagesEl.fetchImages(imagesEl.inputValue).then(items=>{
+    imagesEl.imagePage += 1;
+      console.log(items);
+      createImageCard(items);
+  })
+}
 
 function createImageCard(hits) {
    const markup = hits.map(hit => `<div class="photo-card">
