@@ -36,10 +36,10 @@ function onSubmit(e) {
 
 function onLoadBtnClick(){
   searchImages.fetchImages(searchImages.galleryItems.inputValue).then(items=>{
-    searchImages.galleryItems.imagePage +=1;
+    searchImages.galleryItems.imagePage += 1;
     console.log(items);
     createImageCard(items);
-    // updateNewsList(items);
+    gallery.refresh();
   })
 }
 
@@ -62,8 +62,7 @@ function createImageCard(hits) {
    </div>
  </div>`).join('');
 
-imagesList.innerHTML = markup;
-gallery.refresh();
+imagesList.insertAdjacentHTML("beforeend", markup);
 }
 
 const gallery = new SimpleLightbox('.gallery a', {
@@ -72,5 +71,5 @@ const gallery = new SimpleLightbox('.gallery a', {
 });
 
 function updateNewsList(markup) {
-  imagesList.insertAdjacentHTML("beforeend", markup);
+  
 }
