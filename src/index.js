@@ -35,6 +35,7 @@ function onSubmit(e) {
     })
 
     cleanerMarkup(imagesList);
+    searchImages.galleryItems.imagePage = 1;
     onLoadBtnClick()
   };
 
