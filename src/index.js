@@ -2,7 +2,7 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import infiniteScroll from 'infinite-scroll';
-import imagesEl from './fetchImages';
+import searchImages from './fetchImages';
 
 const form = document.querySelector('.search-form');
 const imagesList = document.querySelector('.gallery');
@@ -14,15 +14,15 @@ loadBtn.addEventListener('click', onLoadBtnClick);
 function onSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
-    imagesEl.inputValue = form.elements.searchQuery.value.trim();
+    searchImages.galleryItems.inputValue = form.elements.searchQuery.value.trim();
 
-    if (imagesEl.inputValue === ""){
+    if (searchImages.galleryItems.inputValue === ""){
         imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         return;
     }
 
-    imagesEl.fetchImages(imagesEl.inputValue).then(items=>{
+    searchImages.fetchImages(searchImages.galleryItems.inputValue).then(items=>{
       if (items.length === 0){
         imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
@@ -35,10 +35,10 @@ function onSubmit(e) {
   };
 
 function onLoadBtnClick(){
-  imagesEl.fetchImages(imagesEl.inputValue).then(items=>{
-    imagesEl.imagePage += 1;
-      console.log(items);
-      createImageCard(items);
+  searchImages.fetchImages(searchImages.galleryItems.inputValue).then(items=>{
+    searchImages.galleryItems.imagePage +=1;
+    console.log(items);
+    updateNewsList(items);
   })
 }
 
@@ -69,3 +69,17 @@ const gallery = new SimpleLightbox('.gallery a', {
   captions: true,
   captionDelay: 250,
 });
+
+function clearNewsList() {
+  imagesList.innerHTML = "";
+}
+
+function updateNewsList(markup) {
+  imagesList.insertAdjacentHTML("beforeend", markup);
+}
+function onError(err) {
+    console.error(err);
+    updateNewsList("<p>Articles not found</p>");
+    imagesList.innerHTML = ""
+    Notiflix.Notify.failure("Sorry,there are no images matching your search query.Please try again")
+  }
