@@ -15,11 +15,12 @@ function onSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
     searchImages.galleryItems.inputValue = form.elements.searchQuery.value.trim();
-    searchImages.galleryItems.imagePage=1;
+    loadBtn.classList.remove('hidden');
 
     if (searchImages.galleryItems.inputValue === ""){
         imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        loadBtn.classList.add('hidden');
         return;
     }
 
@@ -27,10 +28,10 @@ function onSubmit(e) {
       if (items.length === 0){
         imagesList.innerHTML = "";
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        loadBtn.classList.add('hidden');
         return;
       }
         console.log(items);
-        loadBtn.classList.remove('hidden');
     })
 
     cleanerMarkup(imagesList);
