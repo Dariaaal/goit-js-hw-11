@@ -38,7 +38,8 @@ function onLoadBtnClick(){
   searchImages.fetchImages(searchImages.galleryItems.inputValue).then(items=>{
     searchImages.galleryItems.imagePage +=1;
     console.log(items);
-    updateNewsList(items);
+    createImageCard(items);
+    // updateNewsList(items);
   })
 }
 
@@ -70,16 +71,6 @@ const gallery = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-function clearNewsList() {
-  imagesList.innerHTML = "";
-}
-
 function updateNewsList(markup) {
   imagesList.insertAdjacentHTML("beforeend", markup);
 }
-function onError(err) {
-    console.error(err);
-    updateNewsList("<p>Articles not found</p>");
-    imagesList.innerHTML = ""
-    Notiflix.Notify.failure("Sorry,there are no images matching your search query.Please try again")
-  }
