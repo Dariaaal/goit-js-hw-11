@@ -15,6 +15,7 @@ function onSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
     searchImages.galleryItems.inputValue = form.elements.searchQuery.value.trim();
+    searchImages.galleryItems.imagePage=1;
 
     if (searchImages.galleryItems.inputValue === ""){
         imagesList.innerHTML = "";
@@ -29,17 +30,26 @@ function onSubmit(e) {
         return;
       }
         console.log(items);
-        createImageCard(items);
         loadBtn.classList.remove('hidden');
     })
+
+    cleanerMarkup(imagesList);
+    onLoadBtnClick()
   };
 
 function onLoadBtnClick(){
+  loadBtn.disabled=true;
+  loadBtn.textContent='Loading...';
   searchImages.fetchImages(searchImages.galleryItems.inputValue).then(items=>{
     searchImages.galleryItems.imagePage += 1;
     console.log(items);
     createImageCard(items);
     gallery.refresh();
+    loadBtn.disabled=false;
+    loadBtn.textContent='Load more';
+  }).catch(error=>{
+    Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+    loadBtn.classList.add('hidden');
   })
 }
 
@@ -70,6 +80,7 @@ const gallery = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-function updateNewsList(markup) {
-  
+function cleanerMarkup(element) {
+  return  element.innerHTML = '';
 }
+
